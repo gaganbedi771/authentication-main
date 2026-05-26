@@ -18,8 +18,9 @@ const AuthForm = () => {
 
     if (isLogin) {
       try {
+        console.log(email,password);
         const response = await fetch(
-          "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBjN7mZ1axTHHgEQNmj-2DQRlzEmEGyGH",
+          "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBjN7mZ1axTHHgEQNmj-2DQRlzEmEGyGHw",
           {
             method: "POST",
             body: JSON.stringify({
@@ -47,7 +48,7 @@ const AuthForm = () => {
     } else {
       try {
         const response = await fetch(
-          "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBjN7mZ1axTHHgEQNmj-2DQRlzEmEGyGH",
+          "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBjN7mZ1axTHHgEQNmj-2DQRlzEmEGyGHw",
           {
             method: "POST",
             body: JSON.stringify({
