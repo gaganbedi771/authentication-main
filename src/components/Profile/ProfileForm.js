@@ -1,14 +1,17 @@
 import classes from "./ProfileForm.module.css";
-import { useRef, useContext } from "react";
+import { useRef, useContext,useHistory } from "react";
 import AuthContext from "../../store/auth-context";
 
 const ProfileForm = () => {
   const newPasswordRef = useRef();
   const authCtx = useContext(AuthContext);
+    const history = useHistory();
+
 
   const submitHandler = (event) => {
     event.preventDefault();
     const enteredNewPassword = newPasswordRef.current.value;
+
 
     fetch(
       "https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyBjN7mZ1axTHHgEQNmj-2DQRlzEmEGyGHw",
@@ -27,6 +30,7 @@ const ProfileForm = () => {
       .then((res) => {
         if (res.ok) {
           alert("Password updated successfully!");
+          history.replace("/");
         } else {
           return res.json().then((data) => {
             let errorMessage = "Password update failed!";
