@@ -1,5 +1,5 @@
-import { Switch, Route,Redirect } from "react-router-dom";
-import { useContext } from "react";
+import { Switch, Route, Redirect } from "react-router-dom";
+import { useContext, useEffect } from "react";
 import AuthContext from "./store/auth-context";
 
 import Layout from "./components/Layout/Layout";
@@ -9,6 +9,34 @@ import HomePage from "./pages/HomePage";
 
 function App() {
   const authCtx = useContext(AuthContext);
+
+  useEffect(() => {
+    const checkToken = async () => {
+      if (!authCtx.token) {
+        return;
+      }
+      try {
+        const res = await fetch(
+          "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyBjN7mZ1axTHHgEQNmj-2DQRlzEmEGyGHw",
+          {
+            method: "POST",
+            body: JSON.stringify({
+              idToken: authCtx.token,
+            }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          },
+        );
+        if (!res.ok) {
+          throw new Error("Token validation failed!");
+        }
+      } catch (error) {
+        console.log(error);
+        authCtx.logout();
+      }
+    };
+  }, [authCtx]);
 
   return (
     <Layout>
