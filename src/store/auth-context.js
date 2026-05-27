@@ -15,7 +15,7 @@ export const AuthContextProvider = (props) => {
     localStorage.removeItem("token");
     localStorage.removeItem("expiration");
   }
-  
+
   const initialToken = localStorage.getItem("token");
 
   const [token, setToken] = useState(initialToken);
@@ -25,12 +25,12 @@ export const AuthContextProvider = (props) => {
   const loginHandler = (token) => {
     setToken(token);
     localStorage.setItem("token", token);
+    const expirationTime = new Date(new Date().getTime() + 5 * 60 * 1000);
+    localStorage.setItem("expiration", expirationTime.toISOString());
   };
   const logoutHandler = () => {
     setToken(null);
     localStorage.removeItem("token");
-    const expirationTime = new Date(new Date().getTime() + 5 * 60 * 1000);
-    localStorage.setItem("expiration", expirationTime.toISOString());
   };
 
   const contextValue = {
